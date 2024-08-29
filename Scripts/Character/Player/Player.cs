@@ -5,7 +5,8 @@ namespace demo.Scripts.Character.Player;
 
 public partial class Player : CharacterBody3D
 {
-    [ExportGroup("Required Nodes")] [Export]
+    [ExportGroup("Required Nodes")]
+    [Export]
     public AnimationPlayer AnimPlayerNode { get; private set; }
 
     [Export] public Sprite3D SpriteNode { get; private set; }
@@ -17,14 +18,19 @@ public partial class Player : CharacterBody3D
         Direction = Input.GetVector(
             GameConstants.InputMoveLeft,
             GameConstants.InputMoveRight,
-            GameConstants.InputMoveBackward,
-            GameConstants.InputMoveForward);
+            GameConstants.InputMoveForward,
+            GameConstants.InputMoveBackward
+        );
     }
 
     public void Flip()
     {
         var isNotMovingHorizontally = Direction.X == 0;
-        if (isNotMovingHorizontally) { return; }
+        if (isNotMovingHorizontally)
+        {
+            return;
+        }
+
         var isMovingLeft = Direction.X < 0;
         SpriteNode.FlipH = isMovingLeft;
     }
