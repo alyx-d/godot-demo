@@ -10,6 +10,7 @@ public partial class PlayerDashState : PlayerState
 
     [Export] private Timer _dashTimerNode;
 
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -19,31 +20,30 @@ public partial class PlayerDashState : PlayerState
 
     public override void _PhysicsProcess(double delta)
     {
-        PlayerNode.MoveAndSlide();
-        PlayerNode.Flip();
+        CharacterNode.MoveAndSlide();
+        CharacterNode.Flip();
     }
 
     protected override void EnterState()
     {
-        base.EnterState();
-        PlayerNode.AnimPlayerNode.Play(GameConstants.AnimDash);
-        PlayerNode.Velocity = new Vector3(
-            PlayerNode.Direction.X,
+        CharacterNode.AnimPlayerNode.Play(GameConstants.AnimDash);
+        CharacterNode.Velocity = new Vector3(
+            CharacterNode.Direction.X,
             0,
-            PlayerNode.Direction.Y
+            CharacterNode.Direction.Y
         );
-        if (PlayerNode.Velocity == Vector3.Zero)
+        if (CharacterNode.Velocity == Vector3.Zero)
         {
-            PlayerNode.Velocity = PlayerNode.SpriteNode.FlipH ? Vector3.Left : Vector3.Right;
+            CharacterNode.Velocity = CharacterNode.SpriteNode.FlipH ? Vector3.Left : Vector3.Right;
         }
 
-        PlayerNode.Velocity *= _speed;
+        CharacterNode.Velocity *= _speed;
         _dashTimerNode.Start();
     }
 
     private void HandleDashTimerTimeout()
     {
-        PlayerNode.Velocity = Vector3.Zero;
-        PlayerNode.StateMachineNode.SwitchState<PlayerIdleState>();
+        CharacterNode.Velocity = Vector3.Zero;
+        CharacterNode.StateMachineNode.SwitchState<PlayerIdleState>();
     }
 }
