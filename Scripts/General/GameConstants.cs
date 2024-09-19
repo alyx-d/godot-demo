@@ -13,7 +13,8 @@ public abstract class GameConstants
     public const string InputMoveRight = "MoveRight";
     public const string InputMoveForward = "MoveForward";
     public const string InputMoveBackward = "MoveBackward";
-    public const string InputMoveDash = "MoveDash";
+    public const string InputDash = "Dash";
+    public const string InputAttack = "Attack";
     
     
     // Notifications

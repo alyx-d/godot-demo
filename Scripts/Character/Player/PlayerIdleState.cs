@@ -20,7 +20,8 @@ public partial class PlayerIdleState : PlayerState
 
     public override void _Input(InputEvent @event)
     {
-        if (Input.IsActionJustPressed(GameConstants.InputMoveDash))
+        CheckForAttackInput();
+        if (Input.IsActionJustPressed(GameConstants.InputDash))
         {
             CharacterNode.StateMachineNode.SwitchState<PlayerDashState>();
         }
