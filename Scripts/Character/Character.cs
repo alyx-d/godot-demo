@@ -10,21 +10,22 @@ public abstract partial class Character : CharacterBody3D
 
     [Export] public Sprite3D SpriteNode { get; private set; }
     [Export] public StateMachine StateMachineNode { get; private set; }
-    
-    [ExportGroup("AI Nodes")] [Export]
-    public Path3D PathNode { get; private set; }
-    
+
+    [ExportGroup("AI Nodes")] [Export] public Path3D PathNode { get; private set; }
+    [Export] public NavigationAgent3D AgentNode { get; private set; }
+    [Export] public Area3D ChaseAreaNode { get; private set; }
+
     public Vector2 Direction = Vector2.Zero;
 
     public void Flip()
     {
-        var isNotMovingHorizontally = Direction.X == 0;
+        var isNotMovingHorizontally = Velocity.X == 0;
         if (isNotMovingHorizontally)
         {
             return;
         }
 
-        var isMovingLeft = Direction.X < 0;
+        var isMovingLeft = Velocity.X < 0;
         SpriteNode.FlipH = isMovingLeft;
     }
 }

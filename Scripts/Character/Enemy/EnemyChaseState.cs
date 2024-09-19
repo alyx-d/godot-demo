@@ -1,0 +1,35 @@
+using Godot;
+using System;
+using System.Linq;
+using demo.Scripts.Character.Enemy;
+using demo.Scripts.General;
+
+public partial class EnemyChaseState : EnemyState
+{
+	[Export] private Timer _updateTimerNode;
+	private CharacterBody3D _target;
+	protected override void EnterState()
+	{
+		CharacterNode.AnimPlayerNode.Play(GameConstants.AnimMove);
+		GD.Print("chase state entered");
+		_target = CharacterNode.ChaseAreaNode
+			.GetOverlappingBodies().First() as CharacterBody3D;
+		_updateTimerNode.Timeout += HandleDestTimerTimeout;
+	}
+
+	protected override void ExitState()
+	{
+		_updateTimerNode.Timeout -= HandleDestTimerTimeout;
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		Move();
+	}
+
+	private void HandleDestTimerTimeout()
+	{
+		Destination = _target.GlobalPosition;
+		CharacterNode.AgentNode.TargetPosition = Destination;
+	}
+}

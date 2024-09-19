@@ -5,30 +5,36 @@ namespace demo.Scripts.Character.Enemy;
 
 public partial class EnemyReturnState : EnemyState
 {
-    private Vector3 _direction = Vector3.Zero;
-    [Export(PropertyHint.Range, "1, 10, 0.1")] private float _moveSpeed = 5f;
 
     public override void _Ready()
     {
         base._Ready();
-        var localPosition = CharacterNode.PathNode.Curve.GetPointPosition(0);
-        var globalPosition = CharacterNode.GetGlobalPosition();
-        _direction = localPosition + globalPosition;
+        Destination = GetPointGlobalPosition(0);
     }
 
     protected override void EnterState()
     {
         CharacterNode.AnimPlayerNode.Play(GameConstants.AnimMove);
+
+        CharacterNode.AgentNode.TargetPosition = Destination;
+        
+        CharacterNode.ChaseAreaNode.BodyEntered += HandleChaseAreaBodyEntered;
+    }
+
+    protected override void ExitState()
+    {
+        CharacterNode.ChaseAreaNode.BodyEntered -= HandleChaseAreaBodyEntered;
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (CharacterNode.GlobalPosition == _direction)
+        if (CharacterNode.AgentNode.IsNavigationFinished())
         {
+            // GD.Print("Reached destination");
+            CharacterNode.StateMachineNode.SwitchState<EnemyPatrolState>();
             return;
         }
-        CharacterNode.Velocity = CharacterNode.GlobalPosition.DirectionTo(_direction);
-        CharacterNode.Velocity *= _moveSpeed;
-        CharacterNode.MoveAndSlide();
+
+        Move();
     }
 }

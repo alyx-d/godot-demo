@@ -28,11 +28,16 @@ public abstract partial class CharacterState : Node
             case GameConstants.NotificationExitState:
                 SetPhysicsProcess(false);
                 SetProcessInput(false);
+                ExitState();
                 break;
         }
     }
 
     protected virtual void EnterState()
+    {
+    }
+
+    protected virtual void ExitState()
     {
     }
 }

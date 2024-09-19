@@ -5,7 +5,7 @@ namespace demo.Scripts.Character.Player;
 
 public partial class PlayerMoveState : PlayerState
 {
-    [Export(PropertyHint.Range, "0, 10, 0.1")]
+    [Export(PropertyHint.Range, "0,10,0.1")]
     private float _speed = 5.0f;
 
     public override void _PhysicsProcess(double delta)

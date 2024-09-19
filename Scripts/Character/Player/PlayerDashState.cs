@@ -5,7 +5,7 @@ namespace demo.Scripts.Character.Player;
 
 public partial class PlayerDashState : PlayerState
 {
-    [Export(PropertyHint.Range, "0, 20, 0.1")]
+    [Export(PropertyHint.Range, "0,20,0.1")]
     private float _speed = 10f;
 
     [Export] private Timer _dashTimerNode;
