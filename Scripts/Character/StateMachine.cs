@@ -1,3 +1,4 @@
+using System.Linq;
 using demo.Scripts.General;
 using Godot;
 
@@ -17,15 +18,7 @@ public partial class StateMachine : Node
 
     public void SwitchState<T>()
     {
-        Node newState = null;
-        foreach (var state in _states)
-        {
-            if (state is T)
-            {
-                newState = state;
-            }
-        }
-
+        var newState = _states.FirstOrDefault(state => state is T);
         if (newState == null)
         {
             GD.PrintErr($"未知状态 {typeof(T)}");

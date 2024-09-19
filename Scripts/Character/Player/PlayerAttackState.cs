@@ -21,7 +21,7 @@ public partial class PlayerAttackState : PlayerState
             GameConstants.AnimAttack + _comboCounter,
             -1,
             1.5f
-            );
+        );
         CharacterNode.AnimPlayerNode.AnimationFinished += HandleAnimationFinished;
     }
 
@@ -35,6 +35,19 @@ public partial class PlayerAttackState : PlayerState
     {
         _comboCounter++;
         _comboCounter = Mathf.Wrap(_comboCounter, 1, _maxComboCount + 1);
+        
+        CharacterNode.ToggleHitbox(true);
+        
         CharacterNode.StateMachineNode.SwitchState<PlayerIdleState>();
+    }
+
+    private void PerformHit()
+    {
+        Vector3 newPosition = CharacterNode.SpriteNode.FlipH ? Vector3.Left : Vector3.Right;
+        float distanceMultiplier = 0.75f;
+        newPosition *= distanceMultiplier;
+        CharacterNode.HitboxNode.Position = newPosition;
+        
+        CharacterNode.ToggleHitbox(false);
     }
 }

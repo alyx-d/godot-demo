@@ -11,7 +11,6 @@ public partial class EnemyChaseState : EnemyState
 	protected override void EnterState()
 	{
 		CharacterNode.AnimPlayerNode.Play(GameConstants.AnimMove);
-		GD.Print("chase state entered");
 		_target = CharacterNode.ChaseAreaNode
 			.GetOverlappingBodies().First() as CharacterBody3D;
 		_updateTimerNode.Timeout += HandleDestTimerTimeout;
