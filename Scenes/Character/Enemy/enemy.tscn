@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://dcuguytw3b8td"]
+[gd_scene load_steps=117 format=3 uid="uid://dcuguytw3b8td"]
 
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/Enemy.cs" id="1_b76eh"]
 [ext_resource type="Texture2D" uid="uid://ctm0mgummu0l5" path="res://Assets/Sprites/Characters/Enemy Knight/Idle/0_Demons_of_Darkness_Idle_001.png" id="1_y7r4j"]
@@ -105,9 +105,11 @@
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyReturnState.cs" id="103_cg6tq"]
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyPatrolState.cs" id="104_fxfhd"]
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyChaseState.cs" id="105_d3uov"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyAttackState.cs" id="106_x71ht"]
 
 [sub_resource type="Animation" id="Animation_tsj5k"]
 resource_name = "Attack"
+loop_mode = 1
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -244,13 +246,19 @@ height = 1.45775
 [sub_resource type="SphereShape3D" id="SphereShape3D_2k4lm"]
 radius = 6.0
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("AnimPlayerNode", "SpriteNode", "StateMachineNode", "AgentNode", "ChaseAreaNode")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_kvjdc"]
+radius = 0.8
+
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("AnimPlayerNode", "SpriteNode", "StateMachineNode", "AgentNode", "ChaseAreaNode", "AttackAreaNode")]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_b76eh")
 AnimPlayerNode = NodePath("AnimationPlayer")
 SpriteNode = NodePath("Sprite3D")
 StateMachineNode = NodePath("StateMachine")
 AgentNode = NodePath("NavigationAgent3D")
 ChaseAreaNode = NodePath("ChaseArea")
+AttackAreaNode = NodePath("AttackArea")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.002
@@ -267,7 +275,7 @@ shape = SubResource("CapsuleShape3D_qg474")
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("_currentState", "_states") instance=ExtResource("100_hv7wp")]
 _currentState = NodePath("IdleState")
-_states = [NodePath("IdleState"), NodePath("ReturnState"), NodePath("PatrolState"), NodePath("ChaseState")]
+_states = [NodePath("IdleState"), NodePath("ReturnState"), NodePath("PatrolState"), NodePath("ChaseState"), NodePath("AttackState")]
 
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("101_4k2ax")
@@ -290,6 +298,9 @@ _updateTimerNode = NodePath("Timer")
 wait_time = 0.5
 autostart = true
 
+[node name="AttackState" type="Node" parent="StateMachine"]
+script = ExtResource("106_x71ht")
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
 
@@ -299,3 +310,10 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ChaseArea"]
 shape = SubResource("SphereShape3D_2k4lm")
+
+[node name="AttackArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+shape = SubResource("SphereShape3D_kvjdc")
