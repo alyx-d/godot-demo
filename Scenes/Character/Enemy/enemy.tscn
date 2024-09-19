@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://dcuguytw3b8td"]
+[gd_scene load_steps=122 format=3 uid="uid://dcuguytw3b8td"]
 
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/Enemy.cs" id="1_b76eh"]
 [ext_resource type="Texture2D" uid="uid://ctm0mgummu0l5" path="res://Assets/Sprites/Characters/Enemy Knight/Idle/0_Demons_of_Darkness_Idle_001.png" id="1_y7r4j"]
@@ -107,6 +107,7 @@
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyPatrolState.cs" id="104_fxfhd"]
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyChaseState.cs" id="105_d3uov"]
 [ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyAttackState.cs" id="106_x71ht"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyDeathState.cs" id="108_sqout"]
 
 [sub_resource type="Resource" id="Resource_gp1pl"]
 script = ExtResource("2_cbndx")
@@ -305,7 +306,7 @@ shape = SubResource("CapsuleShape3D_qg474")
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("_currentState", "_states") instance=ExtResource("100_hv7wp")]
 _currentState = NodePath("IdleState")
-_states = [NodePath("IdleState"), NodePath("ReturnState"), NodePath("PatrolState"), NodePath("ChaseState"), NodePath("AttackState")]
+_states = [NodePath("IdleState"), NodePath("ReturnState"), NodePath("PatrolState"), NodePath("ChaseState"), NodePath("AttackState"), NodePath("DeathState")]
 
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("101_4k2ax")
@@ -330,6 +331,9 @@ autostart = true
 
 [node name="AttackState" type="Node" parent="StateMachine"]
 script = ExtResource("106_x71ht")
+
+[node name="DeathState" type="Node" parent="StateMachine"]
+script = ExtResource("108_sqout")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhtwglcuv3lu7"]
+[gd_scene load_steps=8 format=3 uid="uid://bhtwglcuv3lu7"]
 
 [ext_resource type="Script" path="res://Scripts/Levels/Main.cs" id="1_j5ocg"]
 [ext_resource type="PackedScene" uid="uid://kdd87ss4ewtd" path="res://Scenes/Character/Player/player.tscn" id="2_pfkee"]
 [ext_resource type="MeshLibrary" uid="uid://roqq67njklk1" path="res://Resources/tiles.tres" id="3_t27fi"]
 [ext_resource type="PackedScene" uid="uid://dcuguytw3b8td" path="res://Scenes/Character/Enemy/enemy.tscn" id="4_3y2f6"]
+[ext_resource type="PackedScene" uid="uid://dbujhgy7tc54d" path="res://Scenes/General/ui.tscn" id="5_v84ri"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_qmox8"]
 vertices = PackedVector3Array(20.4214, -3.45199, -4.5, 18.4214, -3.45199, -4.5, 18.4214, -3.45199, 13.5, 20.6714, -3.45199, -5.5, 45.4214, -3.45199, 13.5, 45.4214, -3.45199, -5.5, -7.07864, -3.45199, 0.25, -5.82864, -3.45199, 0.75, -4.07864, -3.45199, 0.25, -3.57864, -3.45199, -4.5, -3.82864, -3.45199, 0.75, -15.0786, -3.45199, 6, -8.07864, -3.45199, 6, -8.32864, -3.45199, 0.5, -15.0786, -3.45199, -4.5, -3.82864, -3.45199, 6.25, -5.82864, -3.20199, 6.5, -5.82864, -3.45199, 13.5, -7.82864, -3.45199, 6.5, -15.0786, -3.45199, 13.5)
@@ -60,3 +61,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.96409, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 4)
+
+[node name="UI" parent="." instance=ExtResource("5_v84ri")]

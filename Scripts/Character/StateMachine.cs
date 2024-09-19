@@ -24,6 +24,11 @@ public partial class StateMachine : Node
             GD.PrintErr($"未知状态 {typeof(T)}");
             return;
         }
+
+        if (_currentState is T)
+        {
+            return;
+        }
         _currentState.Notification(GameConstants.NotificationExitState);
         _currentState = newState;
         _currentState.Notification(GameConstants.NotificationEnterState);
