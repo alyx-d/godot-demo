@@ -16,6 +16,7 @@ public abstract class GameConstants
     public const string InputMoveBackward = "MoveBackward";
     public const string InputDash = "Dash";
     public const string InputAttack = "Attack";
+    public const string InputPause = "Pause";
     
     
     // Notifications
