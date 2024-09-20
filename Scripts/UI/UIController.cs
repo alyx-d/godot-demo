@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using demo.Scripts.General;
+using demo.Scripts.Resources;
 using Godot;
 
 namespace demo.Scripts.UI;
@@ -22,9 +23,11 @@ public partial class UIController : Control
 
         _containers[ContainerType.Start].ButtonNode.Pressed += HandleStartPressed;
         _containers[ContainerType.Pause].ButtonNode.Pressed += HandelPausePressed;
+        _containers[ContainerType.Reward].ButtonNode.Pressed += HandleRewardPressed;
 
         GameEvents.OnEndGame += HandleEndGame;
         GameEvents.OnVictory += HandleVictory;
+        GameEvents.OnReward += HandleReward;
     }
 
     public override void _Input(InputEvent @event)
@@ -61,11 +64,11 @@ public partial class UIController : Control
 
     private void HandleStartPressed()
     {
-        _canPause = true;
         GetTree().Paused = false;
         _containers[ContainerType.Start].Visible = false;
         _containers[ContainerType.Stats].Visible = true;
         GameEvents.RaiseStartGame();
+        _canPause = true;
     }
 
     private void HandelPausePressed()
@@ -73,5 +76,25 @@ public partial class UIController : Control
         GetTree().Paused = false;
         _containers[ContainerType.Pause].Visible = false;
         _containers[ContainerType.Stats].Visible = true;
+    }
+
+    private void HandleReward(RewardResource reward)
+    {
+        _canPause = false;
+        GetTree().Paused = true;
+        _containers[ContainerType.Stats].Visible = false;
+        _containers[ContainerType.Reward].Visible = true;
+        _containers[ContainerType.Reward].TextureNode.Texture =
+            reward.SpriteTexture;
+        _containers[ContainerType.Reward].LabelNode.Text =
+            reward.Description;
+    }
+
+    private void HandleRewardPressed()
+    {
+        GetTree().Paused = false;
+        _containers[ContainerType.Reward].Visible = false;
+        _containers[ContainerType.Stats].Visible = true;
+        _canPause = true;
     }
 }
